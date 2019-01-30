@@ -1,0 +1,8 @@
+<h3>
+    Cześć {{ user.name }}, proszę potwierdź swój e-mail.
+</h3>
+
+<p>
+    Potwierdź email klikanąc
+    lub wpisać kod w środku formularza: <b>{{ user.getConfirmationToken() }}</b>
+</p>

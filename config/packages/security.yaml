@@ -1,0 +1,56 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        App\Entity\User:
+            algorithm: 'argon2i'
+            memory_cost: 1024
+            time_cost: 10
+            threads: 2
+    providers:
+        #        in_memory: { memory: ~ }
+        database:
+            entity:
+                class: App\Entity\User
+                property: username
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        api:
+            pattern: ^/api
+            stateless: true
+            anonymous: true
+            json_login:
+                #auth
+                check_path: /api/login_check
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            guard:
+                authenticators:
+                    - App\Security\TokenAuthenticator
+            user_checker:   App\Security\UserEnabledChecker
+        admin:
+            pattern: ^/
+            anonymous: true
+            form_login:
+                check_path: security_login
+                login_path: security_login
+                default_target_path: admin
+                use_referer: true
+            logout:
+                path: security_logout
+
+
+
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        #         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    role_hierarchy:
+
+        ROLE_USER:  [ROLE_EDITOR,ROLE_READER,ROLE_MOBILE]
+        ROLE_ADMIN: [ROLE_EDITOR,ROLE_READER,ROLE_MOBILE]
+        ROLE_SUPERADMIN: ROLE_ADMIN
+

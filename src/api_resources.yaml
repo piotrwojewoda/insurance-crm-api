@@ -1,0 +1,107 @@
+resources:
+
+      App\Entity\InsurancePeriodInTheCompany:
+            itemOperations: ~
+            collectionOperations: ~
+
+      App\Entity\Company:
+            itemOperations:
+                  get:
+                        normalization_context:
+                              groups: ['get-item-company']
+            collectionOperations:
+                  get:
+                        normalization_context:
+                              groups: ['get-collections-company']
+                  post: ~
+
+      App\Entity\Client: ~
+
+      App\Entity\City:
+            itemOperations:
+                  get:
+                        normalization_context:
+                              groups: ['get-item-city']
+                  delete: ~
+            collectionOperations:
+                  get:
+                        normalization_context:
+                             groups: ['get-collection-city']
+                  post:
+                        access_control: 'is_granted("IS_AUTHENTICATED_FULLY")'
+                        denormalization_context:
+                              groups: ['post-collecton-city']
+
+      App\Entity\User:
+            itemOperations:
+                  get:
+                        access_control: 'is_granted("IS_AUTHENTICATED_FULLY")'
+                        access_control_message: 'You have to be authenticated.'
+                        normalization_context:
+                              groups: ['get']
+
+                  put:
+                        access_control: 'is_granted("IS_AUTHENTICATED_FULLY") and object == user'
+                        denormalization_context:
+                              groups: ['put']
+                        normalization_context:
+                              groups: ['get']
+
+                  put-reset-password:
+                        access_control: 'is_granted("IS_AUTHENTICATED_FULLY") and object == user'
+                        method: 'PUT'
+                        path: '/users/{id}/reset-password'
+                        controller: App\Controller\ResetPasswordAction
+                        denormalization_context:
+                              groups: ['put-reset-password']
+                              validation_groups: ['put-reset-password']
+
+            collectionOperations:
+                  post:
+                        access_control: 'is_granted("ROLE_SUPERADMIN")'
+                        access_control_message: 'Only SUPERADMINs can add a user.'
+                        denormalization_context:
+                              groups: ['post']
+                        normalization_context:
+                              groups: ['get']
+                        validation_groups: ['post']
+
+      App\Entity\Policy:
+            collectionOperations:
+                  get:
+                        normalization_context:
+                              groups: ['get-collection']
+                  post: ~
+            itemOperations:
+                  get:
+                        normalization_context:
+                              groups: ['get-item-policy']
+                  put: ~
+                  delete: ~
+
+      App\Entity\InsuranceCategory:
+            collectionOperations:
+                  get: ~
+            itemOperations:
+                  get: ~
+
+      App\Entity\InsuranceType:
+            itemOperations:
+                  get: ~
+            collectionOperations:
+                  get: ~
+
+      App\Entity\InsuranceValue:
+            itemOperations:
+                  get: ~
+            collectionOperations:
+                  get: ~
+
+      App\Entity\UserConfirmation:
+            collectionOperations:
+                 post:
+                       path: '/users/confirm'
+            itemOperations: []
+
+
+
