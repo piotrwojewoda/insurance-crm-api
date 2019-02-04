@@ -23,7 +23,7 @@ class City
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"post-collecton-city","get-item-city","get-collection-city"})
+     * @Groups({"post-collecton-city","get-item-city","get-collection-city","get-item-policy"})
      */
     private $name;
 

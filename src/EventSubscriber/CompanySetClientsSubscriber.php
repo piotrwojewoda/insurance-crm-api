@@ -43,7 +43,6 @@ class CompanySetClientsSubscriber implements EventSubscriberInterface
         ];
     }
 
-
     public function setClientToCompany(GetResponseForControllerResultEvent $event) {
 
         $entity = $event->getControllerResult();
@@ -56,5 +55,4 @@ class CompanySetClientsSubscriber implements EventSubscriberInterface
 
         $entity->setClients($clients);
     }
-
 }

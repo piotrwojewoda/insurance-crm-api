@@ -67,6 +67,14 @@ class Policy implements PublishedDateEntityInterface, AuthoredEntityInterface
      */
     private $clients;
 
+
+    /**
+     * @Groups({"get-item-policy"})
+     */
+    private $company;
+
+
+
     public function __construct()
     {
         $this->insurancePeriodInTheCompanies = new ArrayCollection();
@@ -193,5 +201,21 @@ class Policy implements PublishedDateEntityInterface, AuthoredEntityInterface
     public function setClients($clients): void
     {
         $this->clients = $clients;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param mixed $company
+     */
+    public function setCompany($company): void
+    {
+        $this->company = $company;
     }
 }

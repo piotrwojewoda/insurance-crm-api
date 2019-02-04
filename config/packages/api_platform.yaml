@@ -12,7 +12,7 @@ api_platform:
             items_per_page: 10
             client_items_per_page: true
             items_per_page_parameter_name: itemsPerPage
-            maximum_items_per_page: 6
+            maximum_items_per_page: 10
             # Partial: jesli jest na true to nie jest wykonywany count na bazie i mamy tylko link do następnej strony (performance)
             partial: false
             client_partial: true

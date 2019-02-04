@@ -22,7 +22,8 @@ resources:
                   get:
                         normalization_context:
                               groups: ['get-item-city']
-                  delete: ~
+                  delete:
+                        access_control: 'is_granted("ROLE_SUPERADMIN")'
             collectionOperations:
                   get:
                         normalization_context:

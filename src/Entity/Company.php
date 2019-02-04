@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -21,57 +22,57 @@ class Company
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"get-item-company","get-collections-company"})
+     * @Groups({"get-item-company","get-collections-company","get-item-policy"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"get-item-company"})
+     * @Groups({"get-item-company","get-item-policy"})
      */
     private $longName;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"get-item-company"})
+     * @Groups({"get-item-company","get-item-policy"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"get-item-company"})
+     * @Groups({"get-item-company","get-item-policy"})
      */
     private $regon;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"get-item-company"})
+     * @Groups({"get-item-company","get-item-policy"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="simple_array", nullable=true)
-     * @Groups({"get-item-company"})
+     * @Groups({"get-item-company","get-item-policy"})
      *
      */
     private $latLen = [];
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"get-item-company"})
+     * @Groups({"get-item-company","get-item-policy"})
      */
     private $phone;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\City", inversedBy="companies")
-     * @Groups({"get-item-company","get-collections-company"})
+     * @Groups({"get-item-company","get-collections-company","get-item-policy"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"get-item-company"})
+     * @Groups({"get-item-company","get-item-policy"})
      */
     private $address;
 
