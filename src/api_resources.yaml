@@ -15,7 +15,10 @@ resources:
                               groups: ['get-collections-company']
                   post: ~
 
-      App\Entity\Client: ~
+      App\Entity\Client:
+            itemOperations: ~
+            collectionOperations:
+                  get: ~
 
       App\Entity\City:
             itemOperations:
