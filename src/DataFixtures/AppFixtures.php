@@ -21,7 +21,7 @@ class AppFixtures extends Fixture
 
     private $faker;
     private const CATEGORIES = ['BASIC', 'SILVER', 'GOLD', 'PREMIUM'];
-    private const TYPES = ['ADULT', 'SINGLE', 'FAMILY'];
+    private const TYPES = ['CHILD', 'SINGLE', 'FAMILY'];
 
     private const USERS = [
         [
