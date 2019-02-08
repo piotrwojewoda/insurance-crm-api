@@ -25,7 +25,7 @@ class InsurancePeriodInTheCompany
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Client")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn( nullable=true, onDelete="SET NULL")
      */
     private $client;
 
