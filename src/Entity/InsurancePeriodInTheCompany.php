@@ -41,7 +41,7 @@ class InsurancePeriodInTheCompany
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Policy", inversedBy="insurancePeriodInTheCompanies")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn( nullable=true, onDelete="SET NULL")
      */
     private $policy;
 

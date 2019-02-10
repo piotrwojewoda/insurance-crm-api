@@ -39,7 +39,7 @@ class Policy implements PublishedDateEntityInterface, AuthoredEntityInterface
     private $enddate;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\InsurancePeriodInTheCompany", mappedBy="policy")
+     * @ORM\OneToMany(targetEntity="App\Entity\InsurancePeriodInTheCompany", mappedBy="policy", cascade="remove")
      */
     private $insurancePeriodInTheCompanies;
 
