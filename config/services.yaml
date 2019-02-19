@@ -54,3 +54,11 @@ services:
 #            $itemExtensions: !tagged api_platform.doctrine.orm.query_extension.item
 #        tags:
 #            - { name: 'api_platform.item_data_provider',priority: 2 }
+
+    app.my_filter:
+        parent: 'api_platform.doctrine.orm.search_filter'
+        arguments: [ { name: partial } ]
+        tags:      [ 'api_platform.filter' ]
+        autowire: false
+        autoconfigure: false
+        public: false

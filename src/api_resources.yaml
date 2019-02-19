@@ -11,12 +11,16 @@ resources:
                               groups: ['get-item-company']
             collectionOperations:
                   get:
+                        filters: ['app.my_filter']
                         normalization_context:
                               groups: ['get-collections-company']
                   post: ~
 
       App\Entity\Client:
-            itemOperations: ~
+            itemOperations:
+                  get: ~
+                  delete:
+                        access_control: '(is_granted("IS_AUTHENTICATED_FULLY") and object == user) or is_granted("ROLE_SUPERADMIN")'
             collectionOperations:
                   get: ~
 
@@ -81,7 +85,9 @@ resources:
                         normalization_context:
                               groups: ['get-item-policy']
                   put: ~
-                  delete: ~
+                  delete:
+                        access_control: '(is_granted("IS_AUTHENTICATED_FULLY") and object == user) or is_granted("ROLE_SUPERADMIN")'
+                      #  access_control: '(is_granted("IS_AUTHENTICATED_FULLY") and object == user)'
 
       App\Entity\InsuranceCategory:
             collectionOperations:
