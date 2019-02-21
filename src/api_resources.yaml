@@ -79,7 +79,9 @@ resources:
                   get:
                         normalization_context:
                               groups: ['get-collection']
-                  post: ~
+                  post:
+                        denormalization_context:
+                              groups: ['post-collection-policies']
             itemOperations:
                   get:
                         normalization_context:
@@ -88,6 +90,14 @@ resources:
                   delete:
                         access_control: '(is_granted("IS_AUTHENTICATED_FULLY") and object == user) or is_granted("ROLE_SUPERADMIN")'
                       #  access_control: '(is_granted("IS_AUTHENTICATED_FULLY") and object == user)'
+
+
+      App\Entity\PolicyWithMainClient:
+            collectionOperations:
+                  post:
+                        path: '/policywithmainclient'
+            itemOperations: []
+
 
       App\Entity\InsuranceCategory:
             collectionOperations:
@@ -105,13 +115,15 @@ resources:
             itemOperations:
                   get: ~
             collectionOperations:
-                  get: ~
+                  get:
+                        pagination_enabled: false
 
       App\Entity\UserConfirmation:
             collectionOperations:
                  post:
                        path: '/users/confirm'
             itemOperations: []
+
 
 
 

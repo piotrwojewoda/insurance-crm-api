@@ -22,19 +22,19 @@ class Policy implements PublishedDateEntityInterface, AuthoredEntityInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"get-collection","get-item-policy"})
+     * @Groups({"get-collection","get-item-policy","post-collection-policies"})
      */
     private $code;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"get-collection","get-item-policy"})
+     * @Groups({"get-collection","get-item-policy","post-collection-policies"})
      */
     private $startdate;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"get-collection","get-item-policy"})
+     * @Groups({"get-collection","get-item-policy","post-collection-policies"})
      */
     private $enddate;
 
@@ -45,7 +45,7 @@ class Policy implements PublishedDateEntityInterface, AuthoredEntityInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"get-collection","get-item-policy"})
+     * @Groups({"get-collection","get-item-policy","post-collection-policies"})
      */
     private $period;
 

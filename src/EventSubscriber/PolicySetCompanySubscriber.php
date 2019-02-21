@@ -47,8 +47,8 @@ class PolicySetCompanySubscriber implements EventSubscriberInterface
 
             return;
         }
-        $company = $this->companyRepository->findCompanyByPolicy($entity->getId());
 
+        $company = $this->companyRepository->findCompanyByPolicy($entity->getId());
 
         $entity->setCompany($company);
     }

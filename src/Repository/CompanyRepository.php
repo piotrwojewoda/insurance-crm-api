@@ -45,14 +45,14 @@ class CompanyRepository extends ServiceEntityRepository
 
     public function findCompanyByPolicy($policyId)
     {
-        $query =  $query = $this->createQueryBuilder('p')
-            ->innerJoin(InsurancePeriodInTheCompany::class,'ipitc','WITH','ipitc.policy = p.id')
+        $query =  $query = $this->createQueryBuilder('c')
+            ->innerJoin(InsurancePeriodInTheCompany::class,'ipitc','WITH','ipitc.company = c.id')
           //  ->innerJoin( Company::class,'company','WITH','ipitc.company = company.id')
            ->andWhere('ipitc.enddate > :val')
             ->andWhere('ipitc.policy = :id')
-            ->orderBy('p.id', 'ASC')
+            ->orderBy('c.id', 'ASC')
             ->setMaxResults(10)
-          ->setParameter('val', new \DateTime())
+            ->setParameter('val', new \DateTime())
             ->setParameter('id',$policyId)
             ->getQuery();
 
