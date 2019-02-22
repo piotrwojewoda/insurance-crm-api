@@ -31,19 +31,19 @@ class CompanySetClientsSubscriber implements EventSubscriberInterface
     private $clientRepository;
 
     public function __construct(ClientRepository $clientRepository)
-   {
+    {
+        $this->clientRepository = $clientRepository;
+    }
 
-       $this->clientRepository = $clientRepository;
-   }
-
-    public static function getSubscribedEvents() : array
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::VIEW => ['setClientToCompany', EventPriorities::POST_VALIDATE]
         ];
     }
 
-    public function setClientToCompany(GetResponseForControllerResultEvent $event) {
+    public function setClientToCompany(GetResponseForControllerResultEvent $event)
+    {
 
         $entity = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();

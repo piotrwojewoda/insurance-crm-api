@@ -2,11 +2,9 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiFilter;
-
+use App\Validator\Pesel;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
@@ -35,7 +33,7 @@ class Client
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"get-item-company","get-item-policy"})
-     * @Assert\Type( type="numeric")
+     * @Pesel()
      */
     private $idnumber;
 

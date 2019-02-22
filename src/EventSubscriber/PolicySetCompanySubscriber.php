@@ -27,7 +27,6 @@ class PolicySetCompanySubscriber implements EventSubscriberInterface
     public function __construct(CompanyRepository $companyRepository)
     {
         $this->companyRepository = $companyRepository;
-
     }
 
     public static function getSubscribedEvents()

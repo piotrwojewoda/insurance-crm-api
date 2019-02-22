@@ -35,7 +35,6 @@ class UserRegisterSubscriber implements EventSubscriberInterface
      */
     private $mailer;
 
-
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
         TokenGenerator $tokenGenerator,
@@ -46,11 +45,10 @@ class UserRegisterSubscriber implements EventSubscriberInterface
         $this->mailer = $mailer;
     }
 
-
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['userRegistered',EventPriorities::PRE_WRITE]
+            KernelEvents::VIEW => ['userRegistered', EventPriorities::PRE_WRITE]
         ];
     }
 
@@ -59,13 +57,12 @@ class UserRegisterSubscriber implements EventSubscriberInterface
         $user = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        if (!$user instanceof User || !in_array($method,[Request::METHOD_POST]))
-        {
+        if (!$user instanceof User || !in_array($method, [Request::METHOD_POST])) {
             return;
         }
 
         $user->setPassword(
-            $this->passwordEncoder->encodePassword($user,$user->getPassword()));
+            $this->passwordEncoder->encodePassword($user, $user->getPassword()));
 
 
         $user->setConfirmationToken(
@@ -75,6 +72,4 @@ class UserRegisterSubscriber implements EventSubscriberInterface
         // Send e-mail here
         $this->mailer->sendCinfirmationEmail($user);
     }
-
-
 }
