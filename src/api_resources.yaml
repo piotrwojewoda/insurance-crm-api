@@ -89,8 +89,6 @@ resources:
                   put: ~
                   delete:
                         access_control: '(is_granted("IS_AUTHENTICATED_FULLY") and object == user) or is_granted("ROLE_SUPERADMIN")'
-                      #  access_control: '(is_granted("IS_AUTHENTICATED_FULLY") and object == user)'
-
 
       App\Entity\PolicyWithMainClient:
             collectionOperations:
@@ -98,6 +96,11 @@ resources:
                         path: '/policywithmainclient'
             itemOperations: []
 
+      App\Entity\ClientToPolicy:
+            collectionOperations:
+                  post:
+                        path: '/addclienttopolicy'
+            itemOperations: []
 
       App\Entity\InsuranceCategory:
             collectionOperations:

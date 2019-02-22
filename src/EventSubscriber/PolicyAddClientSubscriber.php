@@ -2,20 +2,19 @@
 /**
  * Created by PhpStorm.
  * User: piotr
- * Date: 20.02.19
- * Time: 18:33
+ * Date: 22.02.19
+ * Time: 16:30
  */
 
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Client;
+use App\Entity\ClientToPolicy;
 use App\Entity\InsurancePeriodInTheCompany;
-use App\Entity\Policy;
-use App\Entity\PolicyWithMainClient;
-use App\Entity\User;
 use App\Repository\CompanyRepository;
 use App\Repository\InsuranceValueRepository;
+use App\Repository\PolicyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,9 +22,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class PolicyWithMainClientSubscriber implements EventSubscriberInterface
+class PolicyAddClientSubscriber implements EventSubscriberInterface
 {
     /**
      * @var EntityManagerInterface
@@ -35,85 +33,69 @@ class PolicyWithMainClientSubscriber implements EventSubscriberInterface
      * @var CompanyRepository
      */
     private $companyRepository;
-
     /**
      * @var InsuranceValueRepository
      */
     private $insuranceValueRepository;
     /**
-     * @var TokenStorageInterface
+     * @var PolicyRepository
      */
-    private $tokenStorage;
+    private $policyRepository;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         CompanyRepository $companyRepository,
         InsuranceValueRepository $insuranceValueRepository,
-        TokenStorageInterface $tokenStorage
+        PolicyRepository $policyRepository
     )
     {
         $this->entityManager = $entityManager;
         $this->companyRepository = $companyRepository;
         $this->insuranceValueRepository = $insuranceValueRepository;
-        $this->tokenStorage = $tokenStorage;
+        $this->policyRepository = $policyRepository;
     }
 
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['setCompany', EventPriorities::POST_VALIDATE]
+            KernelEvents::VIEW => ['addClientToPolicy', EventPriorities::POST_VALIDATE]
         ];
     }
 
-    public function setCompany(GetResponseForControllerResultEvent $event) {
+    public function addClientToPolicy(GetResponseForControllerResultEvent $event)
+    {
         $entity = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        $token = $this->tokenStorage->getToken();
-
-        /** @var User $author */
-        $author = $token->getUser();
-        if (null === $token)
-        {
-            return;
-        }
         if (
-            (!$entity instanceof PolicyWithMainClient) || Request::METHOD_POST !== $method) {
+            (!$entity instanceof ClientToPolicy) || Request::METHOD_POST !== $method) {
             return;
         }
-
         $company = $this->companyRepository->find($entity->getCompany());
-        $insuranceValue = $this->insuranceValueRepository->find($entity->getInsuranceValue());
-
-        $policy = new Policy();
-        $policy->setPeriod($entity->getPeriod());
-        $policy->setCode($entity->getCode());
-        $policy->setStartdate($entity->getStartDate());
-        $policy->setEnddate($entity->getEndDate());
-        $policy->setPublished(new \DateTime());
-        $policy->setAuthor($author);
+        $insuranceValue = $this->insuranceValueRepository->find($entity->getSelectedValue());
+        $policy = $this->policyRepository->find($entity->getPolicy());
 
         $client = new Client();
-        $client->setSex(0);
+        $client->setFirstname($entity->getFirstname());
+        $client->setLastname($entity->getLastname());
         $client->setIdnumber($entity->getPesel());
-        $client->setLastname($entity->getClientLastName());
-        $client->setFirstname($entity->getClientFirstName());
         $client->setForeigner(0);
-        $client->setBirthdate(new \DateTime());
+        $client->setSex(0); // TODO Adding getting sex value from pesel
+        $client->setBirthdate(new \DateTime('now')); // TODO Adding getting birthdate from pesel
 
         $insurancePeriodInTheCompany = new InsurancePeriodInTheCompany();
-        $insurancePeriodInTheCompany->setStartdate($entity->getStartDate());
-        $insurancePeriodInTheCompany->setEnddate($entity->getEndDate());
-        $insurancePeriodInTheCompany->setPolicy($policy);
+        $insurancePeriodInTheCompany->setClient($client);
         $insurancePeriodInTheCompany->setCompany($company);
         $insurancePeriodInTheCompany->setValue($insuranceValue);
-        $insurancePeriodInTheCompany->setClient($client);
+        $insurancePeriodInTheCompany->setPolicy($policy);
+        $insurancePeriodInTheCompany->setStartdate($policy->getStartdate());
+        $insurancePeriodInTheCompany->setEnddate($policy->getEnddate());
 
-        $this->entityManager->persist($policy);
         $this->entityManager->persist($client);
         $this->entityManager->persist($insurancePeriodInTheCompany);
-
         $this->entityManager->flush();
+
         $event->setResponse(new JsonResponse(null, Response::HTTP_OK));
     }
+
 }
