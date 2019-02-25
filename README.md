@@ -17,6 +17,6 @@ This is a simple REST API application that is part of the backend of InsuranceCR
 
 ##Screens:
 
-![image](https://user-images.githubusercontent.com/39909775/53327663-8b2c1180-38e8-11e9-8141-04955e9a4467.png)
+![image](https://user-images.githubusercontent.com/39909775/53329385-89fce380-38ec-11e9-82c1-064643d6214d.png)
 
-![image](https://user-images.githubusercontent.com/39909775/53327749-b878bf80-38e8-11e9-90d9-397ca818d774.png)
+![image](https://user-images.githubusercontent.com/39909775/53329437-5e79f900-38ec-11e9-8037-56757b93a68d.png)
