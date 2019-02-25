@@ -13,4 +13,4 @@ This is a simple REST API application that is part of the backend of InsuranceCR
 4. run `php bin/console make:migration`
 5. run `php bin/console doctrine:migrations:migrate`
 6. load fixtures `php bin/console doctrine:fixtures:load`
-
+7. Generate public and private keys and put them to `config/jwt/private.pem` & `config/jwt/public.pem`.
