@@ -97,5 +97,4 @@ class PolicyAddClientSubscriber implements EventSubscriberInterface
 
         $event->setResponse(new JsonResponse(null, Response::HTTP_OK));
     }
-
 }

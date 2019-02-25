@@ -44,9 +44,6 @@ class PolicySetClientsSubscriber implements EventSubscriberInterface
             return;
         }
         $clients = $this->clientRepository->findCurrentClientsByPolicy($entity->getId());
-
         $entity->setClients($clients);
     }
-
-
 }

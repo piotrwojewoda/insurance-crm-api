@@ -13,27 +13,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Controller\ResetPasswordAction;
 
-
-/*
- *  normalization_context - jest to zbiór zasad które obowiązują w momencie pobierania danych:
- *  W wypadku get mówimy mu że do pobierania danych zezwalamy na grupę 'get' i tylko te propertki które mają get będą zwracane przez api
- *
- *
- *  denormalization context - ten kontekst dotyczy wysyłania danych przez nas z api ( możemy ograniczać dane które od nas wychodzą, jeśli chcemy
- *      np. zablokować możliwość modyifikacji danych. w naszym wypadku nie ma możliwości edytowania pola które nie jest w grupie 'put'
- *
- * -------------------
- *
- *  access control - definiuje co możemy zrobić. zapis object == user oznacza że porównujemy aktualny obiekt usera z userem
- * na którym jesteśmy zautentykowani (po tokenie)
- *
- *
- *      jeśli denormalization_context i normalization context znajdują się wewnątrz indywidualnych operacji (np: post,put) to
- *     muszą być pisane z podłogami małymi literami a jeśli ogólnie to camelem.
- *
- */
-
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity("username", groups={"post","put"})
@@ -41,17 +20,14 @@ use App\Controller\ResetPasswordAction;
  */
 class User implements UserInterface
 {
-
-
     const ROLE_USER = 'ROLE_USER';
     const ROLE_EDITOR = 'ROLE_EDITOR';
     const ROLE_READER = 'ROLE_READER';
     const ROLE_MOBILE = 'ROLE_MOBILE';
     const ROLE_ADMIN = 'ROLE_ADMIN';
     const ROLE_SUPERADMIN = 'ROLE_SUPERADMIN';
-//
-    const DEFAULT_ROLES = [self::ROLE_USER];
 
+    const DEFAULT_ROLES = [self::ROLE_USER];
 
     /**
      * @ORM\Id()
@@ -229,8 +205,6 @@ class User implements UserInterface
 
         return $this;
     }
-
-
 
     /**
      * Returns the roles granted to the user.

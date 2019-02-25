@@ -40,9 +40,6 @@ class CompanyRepository extends ServiceEntityRepository
 
     }
 
-
-
-
     public function findCompanyByPolicy($policyId)
     {
         $query =  $query = $this->createQueryBuilder('c')
@@ -58,20 +55,4 @@ class CompanyRepository extends ServiceEntityRepository
 
         return $query->getOneOrNullResult();
     }
-
-
-
-
-
-    /*
-    public function findOneBySomeField($value): ?Company
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

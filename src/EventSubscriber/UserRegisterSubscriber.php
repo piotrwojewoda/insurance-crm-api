@@ -69,7 +69,6 @@ class UserRegisterSubscriber implements EventSubscriberInterface
             $this->tokenGenerator->getRandomSecureToken()
         );
 
-        // Send e-mail here
         $this->mailer->sendCinfirmationEmail($user);
     }
 }

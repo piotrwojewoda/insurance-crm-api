@@ -52,7 +52,6 @@ class CompanySetClientsSubscriber implements EventSubscriberInterface
             return;
         }
         $clients = $this->clientRepository->findCurrentClientsByCompany($entity->getId());
-
         $entity->setClients($clients);
     }
 }

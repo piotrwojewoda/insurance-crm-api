@@ -23,7 +23,6 @@ class ExceptionListener extends BaseExceptionListener
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
         $request = $event->getRequest();
-        // Normalize exceptions only for routes managed by API Platform
         if (
             'html' === $request->getRequestFormat('') ||
             (!$request->attributes->has('_api_resource_class') && !$request->attributes->has('_api_respond') && !$request->attributes->has('_graphql'))
